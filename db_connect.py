@@ -1,8 +1,8 @@
 # db_connect.py
-import pyodbc
+import pyodbc 
 
-server = 'tcp:sql-{yourname}-001.database.windows.net,1433'
-database = 'sqldb-webapp-{yourname}-001'
+server = 'tcp:sql-keimo-001.database.windows.net,1433'
+database = 'sqldb-webapp-keimo-001'
 username = 'sqladmin'
 password = 'Complex.Pass123!'
 driver = '{ODBC Driver 17 for SQL Server}'
