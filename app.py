@@ -13,7 +13,7 @@ def get_db_connection():
         'SERVER=tcp:sql-keimo-001.database.windows.net,1433;'
         'DATABASE=sqldb-webapp-keimo-001;'
         'UID=sqladmin;'
-        'PWD=Passw0rd'
+        'PWD=Complex.Pass123!'
     )
     return pyodbc.connect(connection_string)
 
