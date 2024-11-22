@@ -1,0 +1,56 @@
+/* Custom styles */
+.post-content {
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+.profile-card {
+    transition: transform 0.2s;
+}
+
+.profile-card:hover {
+    transform: translateY(-2px);
+}
+
+/* Custom button hover effects */
+.btn-hover:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+}
+
+/* Custom flash message animations */
+.flash-message {
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Custom form input focus states */
+.form-input:focus {
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5);
+    outline: none;
+}
+
+/* Custom loading spinner */
+.loading-spinner {
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid #3498db;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
