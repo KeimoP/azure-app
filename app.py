@@ -14,6 +14,7 @@ def get_db_connection():
         'DATABASE=sqldb-webapp-keimo-001;'
         'UID=sqladmin;'
         'PWD=Complex.Pass123!'
+        
     )
     return pyodbc.connect(connection_string)
 
