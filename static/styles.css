@@ -1,3 +1,36 @@
+/* Global Styles */
+body {
+    font-family: 'Roboto', sans-serif;
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364); /* Futuristic dark gradient */
+    color: #e0e0e0; /* Soft white for readability */
+    line-height: 1.6;
+    overflow-x: hidden;
+    min-height: 100vh;
+}
+
+/* Snowflake styling */
+.snowflake {
+    position: fixed;
+    top: -50px; /* Start above the viewport */
+    width: 20px;
+    height: 20px;
+    background: url('https://media.lordicon.com/icons/wired/flat/815-snow-flake.svg') no-repeat center center;
+    background-size: contain;
+    pointer-events: none; /* Prevent interaction with snowflakes */
+    animation: fall linear infinite;
+    z-index: -1;
+}
+
+/* Snowflake falling animation */
+@keyframes fall {
+    0% {
+        transform: translateY(0) rotate(0deg);
+    }
+    100% {
+        transform: translateY(110vh) rotate(360deg);
+    }
+}
+
 /* Custom styles */
 .post-content {
     white-space: pre-wrap;
