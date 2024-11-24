@@ -19,4 +19,19 @@
         {% endfor %}
     </div>
 </div>
+<script>
+        // Generate snowflakes
+        const numSnowflakes = 50; // Adjust the number of snowflakes
+        const body = document.body;
+
+        for (let i = 0; i < numSnowflakes; i++) {
+            const snowflake = document.createElement('div');
+            snowflake.classList.add('snowflake');
+            snowflake.style.left = `${Math.random() * 100}vw`;
+            snowflake.style.animationDelay = `${Math.random() * 10}s`;
+            snowflake.style.animationDuration = `${10 + Math.random() * 10}s`;
+            snowflake.style.opacity = `${0.3 + Math.random() * 0.7}`;
+            body.appendChild(snowflake);
+        }
+</script>
 {% endblock %}
