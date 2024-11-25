@@ -7,6 +7,9 @@ import secrets
 app = Flask(__name__)
 app.secret_key = secrets.token_hex(32)  # Replace with a real secret key in production
 
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=8000)
+
 # Database connection function
 def get_db_connection():
     connection_string = (
