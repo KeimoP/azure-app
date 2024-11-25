@@ -2,9 +2,10 @@ from flask import Flask, render_template, request, redirect, url_for, session, f
 from datetime import datetime
 import pyodbc
 from werkzeug.security import generate_password_hash, check_password_hash
+import secrets
 
 app = Flask(__name__)
-app.secret_key = '36142e5ce68cdd6b295bbd5c45a7e793'  # Replace with a real secret key in production
+app.secret_key = secrets.token_hex(32)  # Replace with a real secret key in production
 
 # Database connection function
 def get_db_connection():
@@ -22,8 +23,12 @@ def get_db_connection():
 def home():
     if 'username' not in session:
         return redirect(url_for('login'))
-    
-    conn = get_db_connection()
+    try:
+        conn = get_db_connection()
+    except pyodbc.Error as e:
+        flash("Database connection error. Please try again later.")
+        app.logger.error(f"Database connection error: {e}")
+        return redirect(url_for('error_page'))  # Define an error page
     cursor = conn.cursor()
     cursor.execute('SELECT p.*, u.username FROM posts p JOIN users u ON p.user_id = u.id ORDER BY p.created_at DESC')
     posts = cursor.fetchall()
