@@ -3,25 +3,23 @@ from datetime import datetime
 import pyodbc
 from werkzeug.security import generate_password_hash, check_password_hash
 import secrets
-import os
 
 app = Flask(__name__)
 app.secret_key = secrets.token_hex(32)  # Replace with a real secret key in production
 
-# Database connection function with environment variables
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=8000)
+
+# Database connection function
 def get_db_connection():
     connection_string = (
-        f"DRIVER={{ODBC Driver 17 for SQL Server}};"
-        f"SERVER={os.getenv('DB_SERVER')};"
-        f"DATABASE={os.getenv('DB_NAME')};"
-        f"UID={os.getenv('DB_USER')};"
-        f"PWD={os.getenv('DB_PASSWORD')}"
+        'DRIVER={ODBC Driver 17 for SQL Server};'
+        'SERVER=tcp:sql-keimo-001.database.windows.net,1433;'
+        'DATABASE=sqldb-webapp-keimo-001;'
+        'UID=sqladmin;'
+        'PWD=Complex.Pass123!'
     )
-    try:
-        return pyodbc.connect(connection_string)
-    except pyodbc.Error as e:
-        app.logger.error(f"Database connection failed: {e}")
-        raise
+    return pyodbc.connect(connection_string)
 
 # Routes
 @app.route('/')
@@ -68,28 +66,20 @@ def register():
         password = request.form['password']
         hashed_password = generate_password_hash(password)
         
+        conn = get_db_connection()
+        cursor = conn.cursor()
         try:
-            conn = get_db_connection()
-            cursor = conn.cursor()
-            cursor.execute(
-                'INSERT INTO users (username, password) VALUES (?, ?)',
-                (username, hashed_password)
-            )
+            cursor.execute('INSERT INTO users (username, password) VALUES (?, ?)',
+                         (username, hashed_password))
             conn.commit()
             flash('Registration successful! Please login.')
             return redirect(url_for('login'))
-        except pyodbc.Error as e:
-            app.logger.error(f"Database error: {e}")
-            flash('A database error occurred. Please try again.')
+        except:
+            flash('Username already exists')
         finally:
-            if 'conn' in locals():
-                conn.close()
-
-    return render_template('register.html')
-
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8000, debug=True)
+            conn.close()
     
+    return render_template('register.html')
 
 @app.route('/create_post', methods=['POST'])
 def create_post():
