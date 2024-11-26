@@ -4,6 +4,7 @@ import pyodbc
 from werkzeug.security import generate_password_hash, check_password_hash
 import secrets
 import os
+from db_connect import get_db_connection
 
 app = Flask(__name__)
 app.secret_key = secrets.token_hex(32)  # Replace with a real secret key in production
